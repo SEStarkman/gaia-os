@@ -1,0 +1,10 @@
+{
+  "name": "weekly-review",
+  "description": "Weekly memory maintenance — review daily files, update MEMORY.md, clean up stale info",
+  "schedule": "0 10 * * 0",
+  "timezone": "America/New_York",
+  "channel": "telegram",
+  "prompt": "Run a weekly memory review.\n\n1. Read all memory/YYYY-MM-DD.md files from the past 7 days\n2. Identify significant events, decisions, lessons, and patterns worth keeping long-term\n3. Update MEMORY.md with distilled learnings:\n   - New facts about your human\n   - Project status changes\n   - New hard rules or preferences discovered\n   - Lessons learned from mistakes\n   - Infrastructure changes\n4. Remove outdated info from MEMORY.md (completed projects, resolved issues, stale pending actions)\n5. Check Pending Actions — flag anything that's been sitting for >2 weeks\n\nOutput a brief summary of what you updated and any pending items that need attention.\n\nFormat: clean bullet list. No internal narration.",
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "notes": "Runs Sunday morning. This is the 'journal review' — raw daily notes get distilled into curated long-term memory."
+}

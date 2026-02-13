@@ -1,0 +1,10 @@
+{
+  "name": "morning-digest",
+  "description": "Daily morning briefing — email, calendar, weather, and anything notable",
+  "schedule": "0 7 * * *",
+  "timezone": "America/New_York",
+  "channel": "telegram",
+  "prompt": "Good morning. Run a daily digest:\n\n1. Check email for any urgent or important unread messages from the last 12 hours\n2. Review calendar for today and tomorrow — list all events with times\n3. Check the weather for today (temperature, conditions, rain probability)\n4. Check memory/YYYY-MM-DD.md (yesterday) for any pending items or follow-ups\n\nOutput a clean summary. Lead with anything urgent, then calendar, then weather. Keep it scannable. If nothing notable, say so briefly — don't pad.",
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "notes": "Uses a faster model since this is mostly data retrieval. Adjust schedule to match when your human wakes up."
+}

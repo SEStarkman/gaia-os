@@ -1,0 +1,10 @@
+{
+  "name": "daily-memory",
+  "description": "Create today's daily memory file at the start of each day",
+  "schedule": "0 5 * * *",
+  "timezone": "America/New_York",
+  "channel": "telegram",
+  "prompt": "Create today's daily memory file at memory/YYYY-MM-DD.md (use today's actual date).\n\nTemplate:\n```\n# YYYY-MM-DD\n\n## Tasks\n\n## Notes\n\n## Decisions\n\n## Lessons\n```\n\nIf the file already exists, don't overwrite it. Just confirm it exists.\n\nNo output to chat needed — just create the file silently. Reply with HEARTBEAT_OK.",
+  "model": "anthropic/claude-sonnet-4-20250514",
+  "notes": "Runs early morning before other crons. Ensures the day's memory file exists for other tasks to write to."
+}
