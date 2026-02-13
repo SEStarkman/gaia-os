@@ -1,136 +1,83 @@
-# Crons
+# Automations
 
-Crons tell your agent **when** to do something. Skills tell it **how**. Keeping them separate means you can reuse one skill across multiple schedules and update timing without touching the skill logic.
+Your agent can do things on a schedule — check your email every morning, scan social media for trends, remind you to reflect at night. In OpenClaw, these are called **crons**.
 
-## How Crons Work
+You don't need to write config files or learn cron syntax. Just tell your agent what you want and when.
 
-OpenClaw cron jobs are JSON configs that define:
+---
 
-- **Schedule** — When to run (cron syntax)
-- **Prompt** — What to tell the agent
-- **Channel** — Where to deliver results
-- **Model** — Which model to use (optional, defaults to your main model)
+## How to Set One Up
 
-Each cron run is an isolated sub-agent session. It doesn't see your main conversation history, which means:
+Say something like this in chat:
 
-- It won't leak context from private conversations
-- It starts fresh with just the workspace files + the prompt
-- It can use a cheaper/faster model for simple tasks
+> "Every weekday morning at 7am, check my email and calendar and send me a summary of what's coming today."
 
-## Creating a Cron
+Your agent will create the scheduled task for you. It'll ask clarifying questions if it needs them (which channel to deliver to, what timezone you're in, etc.).
 
-Use the OpenClaw CLI:
+To see what's running, manage timing, or turn things off — just ask your agent.
 
-```bash
-openclaw cron add \
-  --name "morning-digest" \
-  --schedule "0 7 * * *" \
-  --prompt "Check email, calendar, and weather. Summarize what's coming today." \
-  --channel telegram
-```
+---
 
-Or manage them through conversation with your agent — it can create cron jobs for you.
+## Inspiration
 
-## Cron Syntax Quick Reference
+Here are things people commonly automate. Use these as starting points — customize them to fit your life.
 
-```
-┌───────────── minute (0-59)
-│ ┌───────────── hour (0-23)
-│ │ ┌───────────── day of month (1-31)
-│ │ │ ┌───────────── month (1-12)
-│ │ │ │ ┌───────────── day of week (0-7, Sun=0 or 7)
-│ │ │ │ │
-* * * * *
-```
+### ☀️ Morning Briefing
 
-**Common patterns:**
+> "Every morning at 7am, check my email for anything urgent, look at my calendar for today and tomorrow, and check the weather. Send me a quick summary."
 
-| Schedule | Cron Expression |
-|----------|----------------|
-| Every morning at 7am | `0 7 * * *` |
-| Every 30 minutes, 7am-9pm | `0,30 7-21 * * *` |
-| Every Monday at 9am | `0 9 * * 1` |
-| Sunday at 10am | `0 10 * * 0` |
-| Every 4 hours | `0 */4 * * *` |
-| Weekdays at 6pm | `0 18 * * 1-5` |
+Wake up to a snapshot of your day instead of digging through three apps.
 
-**Timezone:** Append your timezone to schedules. Example: `0 7 * * * ET` for 7am Eastern.
+### 📱 Content Scanning
 
-## Best Practices
+> "Every few hours during the day, scan X/Twitter for trending posts about AI. Find 2-3 I should reply to and draft some ideas."
 
-### Stagger your crons
+Stay on top of your niche without doomscrolling. Works for any topic — replace "AI" with whatever you care about.
 
-Don't schedule everything at the same time. Stagger by 5-15 minutes to avoid:
+### 🧠 Memory Maintenance
 
-- Out-of-order message delivery
-- Main session contention
-- API rate limiting
+> "Every Sunday morning, review my daily memory files from the past week and update MEMORY.md with anything worth keeping long-term."
 
-```
-5:00am  — Daily memory file
-5:15am  — Morning digest
-5:30am  — Content scan
-```
+Your agent journals what happens each day. This automation distills the important stuff so nothing gets lost.
 
-### Keep prompts self-contained
+### 📝 Daily Reflection
 
-Each cron runs in isolation. It doesn't know what happened in your last conversation. Include everything it needs:
+> "Every night at 9pm, send me a quick prompt asking about the most meaningful moment of my day."
 
-```
-Read the x-content-scan skill. Search for trending AI posts from the last 24 hours 
-with 500+ likes. Output 3-5 opportunities in the standard format. 
-Read writing-style-guide.md and validate all drafts against it.
-```
+Inspired by Matthew Dicks' "Homework for Life" concept. A small daily practice that builds up over time.
 
-### Clean output only
+### ⏰ Reminders
 
-Cron results go directly to your channel. No one wants to see internal narration or debugging output. Instruct the cron to output clean summaries.
+> "Remind me every Friday at 3pm to submit my weekly report."
 
-### Use the right model
+> "On March 1st at 9am, remind me that the project proposal is due."
 
-Expensive models aren't always needed. A content scan might work fine with a faster model. A complex analysis might need your best model.
+Simple reminders — recurring or one-time.
 
-## Skill + Cron Relationship
+### 📊 Weekly Review
 
-The cron prompt references skills by name or by telling the agent what to do:
+> "Every Sunday at 10am, check my pending actions, review what happened this week, and flag anything that's been sitting for more than two weeks."
 
-```
-"Use the bird-cli skill to search for AI content. 
-Follow the x-content-scan workflow for filtering and formatting."
-```
+A weekly check-in that keeps things from falling through the cracks.
 
-This means:
-- **Skill update** → All crons using it automatically get the new instructions
-- **Cron update** → Skills stay untouched, only timing/delivery changes
-- **New cron, same skill** → Just create a new schedule with a different prompt
+### 📧 Email Monitoring
 
-## Managing Crons
+> "Check my email every 2 hours during work hours. Only ping me if something looks urgent."
 
-```bash
-# List all crons
-openclaw cron list
+Your agent filters the noise so you don't have to.
 
-# See run history
-openclaw cron runs --id JOB_ID
+---
 
-# Trigger manually (for testing)
-openclaw cron run JOB_ID
+## Tips
 
-# Disable without deleting
-openclaw cron disable JOB_ID
+- **Be specific about timing.** "Every morning" is vague — "Every weekday at 7:30am Eastern" is clear.
 
-# Delete
-openclaw cron rm JOB_ID
-```
+- **Tell it where to send results.** "Send it to Telegram" or "just update my memory file, no notification needed."
 
-## Example Configs
+- **Start simple.** One or two automations first. Add more as you get comfortable.
 
-The `examples/` directory contains reference configurations for common patterns. These are illustrative — adapt the prompts, schedules, and channels to your setup.
+- **Your agent handles the technical parts.** You describe what you want in plain English. The agent figures out the scheduling, the prompts, and the delivery.
 
-| Config | Purpose |
-|--------|---------|
-| [morning-digest.json](examples/morning-digest.json) | Daily briefing (email, calendar, weather) |
-| [content-pulse.json](examples/content-pulse.json) | Periodic social media scanning |
-| [daily-memory.json](examples/daily-memory.json) | Create today's memory file |
-| [homework-for-life.json](examples/homework-for-life.json) | Daily reflection prompt |
-| [weekly-review.json](examples/weekly-review.json) | Weekly memory maintenance |
+---
+
+For more on how automations relate to skills (the "what" vs "when" concept), see [docs/PHILOSOPHY.md](../docs/PHILOSOPHY.md).

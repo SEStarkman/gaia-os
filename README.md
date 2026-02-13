@@ -5,140 +5,107 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![OpenClaw](https://img.shields.io/badge/Powered%20by-OpenClaw-purple)](https://docs.openclaw.ai)
 
-GAIA OS is the workspace that runs behind your AI agent. It gives OpenClaw structure — memory that persists, skills that route correctly, crons that fire on time, and conventions that survive hundreds of sessions without falling apart.
-
-This isn't a framework. It's a filing system for an AI that wakes up with amnesia every time you talk to it.
+GAIA OS gives your AI agent structure — memory that persists between conversations, a personality that sticks, skills for your favorite tools, and automations that run on schedule. Clone it, install [OpenClaw](https://docs.openclaw.ai), and start chatting. Your agent handles the rest.
 
 ---
 
 ## What You Get
 
-| Component | What It Does |
-|-----------|-------------|
-| **Structured Memory** | Daily files + curated long-term memory. Your agent journals what happens and distills what matters. |
-| **Skills Framework** | Markdown skill files that teach your agent how to use tools. Description = routing logic. |
-| **Cron Templates** | Scheduled tasks: morning digests, content scans, memory maintenance, daily reflections. |
-| **Bootstrap Flow** | First-run conversation that builds your agent's personality, learns about you, and writes everything to the right files. |
-| **Battle-Tested Conventions** | Safety rules, group chat etiquette, heartbeat strategy, proactive work guidelines — all from production use. |
-| **Client Kit** | Onboarding docs you can hand to anyone setting up their own agent. |
+- **Memory that lasts.** Your agent remembers what happened yesterday, last week, and last month — even though it wakes up fresh every session.
+- **A real personality.** Not a generic chatbot. Your agent figures out who it is through a first-run conversation with you.
+- **Skills for your tools.** Teach your agent how to use Notion, Twitter, or anything else with simple markdown files.
+- **Automations.** Morning briefings, content scanning, reminders, weekly reviews — just tell your agent what you want and when.
+- **Battle-tested conventions.** Safety rules, group chat etiquette, and proactive work guidelines from hundreds of real sessions.
 
 ## Quick Start
 
 ### 1. Install OpenClaw
 
-Follow the [OpenClaw setup guide](https://docs.openclaw.ai/getting-started) to get OpenClaw running.
+Follow the [OpenClaw setup guide](https://docs.openclaw.ai/getting-started).
 
-### 2. Clone This Repo Into Your Workspace
+### 2. Clone this repo
 
 ```bash
 git clone https://github.com/SEStarkman/gaia-os.git ~/gaia
 cd ~/gaia
 ```
 
-### 3. Run Setup
+### 3. Run setup
 
 ```bash
 bash scripts/setup.sh
 ```
 
-This checks your environment and prepares the workspace.
-
-### 4. Start Your Agent
+### 4. Start chatting
 
 ```bash
 openclaw gateway start
 ```
 
-Send your first message. The agent will find `BOOTSTRAP.md` and start the getting-to-know-you conversation. It'll figure out who it is, learn about you, and write everything to the workspace files.
-
-That's it. You're running.
+Send your first message. Your agent will introduce itself, learn about you, and set up its own personality. That's it — you're running.
 
 ---
 
-## Project Structure
-
-```
-gaia-os/
-├── AGENTS.md              # Operating protocol (start here)
-├── SOUL.md                # Agent personality (filled during bootstrap)
-├── USER.md                # About you (filled during bootstrap)
-├── IDENTITY.md            # Agent name, emoji, vibe
-├── MEMORY.md              # Long-term curated memory
-├── HEARTBEAT.md           # Periodic check configuration
-├── TOOLS.md               # Environment-specific notes
-├── BOOTSTRAP.md           # First-run conversation (delete after)
-│
-├── memory/                # Daily memory files
-│   └── YYYY-MM-DD.md
-│
-├── skills/                # Tool skills
-│   ├── README.md
-│   ├── SKILL-TEMPLATE.md
-│   └── examples/          # Reference implementations
-│
-├── crons/                 # Scheduled task configs
-│   ├── README.md
-│   └── examples/
-│
-├── client-kit/            # Onboarding docs for new users
-├── scripts/               # Utility scripts
-└── docs/                  # Philosophy, guides, references
-```
-
 ## How It Works
 
-### Memory Architecture
+Your agent wakes up with no memory each session. These files fix that:
 
-Your agent wakes up fresh every session. It has no built-in memory. These files *are* its memory:
+- **SOUL.md** — Your agent's personality. Built during the first conversation, evolves over time.
+- **USER.md** — What your agent knows about you. Updated as it learns.
+- **MEMORY.md** — Long-term memory. The important stuff, curated over time.
+- **memory/YYYY-MM-DD.md** — Daily journal. What happened today.
 
-- **Daily files** (`memory/YYYY-MM-DD.md`) — Raw journal. What happened today.
-- **MEMORY.md** — Curated long-term memory. Periodically distilled from daily files.
-- **SOUL.md** — Identity. Rarely changes.
-- **USER.md** — Understanding of you. Updated as it learns.
+Every session, the agent reads these files first. That's how it remembers.
 
-Every session starts the same way: read SOUL.md, read USER.md, read today's memory. This gives the agent continuity without needing persistent state.
+### Skills
 
-### Skills = What, Crons = When
+Skills are markdown files that teach your agent how to use a tool — the commands, the auth, the gotchas. See `skills/` for examples and a template to create your own.
 
-**Skills** teach your agent *how* to do something. A skill file contains auth patterns, command syntax, common pitfalls, and negative examples ("this command does NOT exist").
+### Automations
 
-**Crons** tell your agent *when* to do something. They reference skills and define schedules. "Run the content scan every morning at 9 AM using the x-content-scan skill."
-
-Separating the two means you can reuse skills across multiple crons, and update timing without touching the skill logic.
+Tell your agent to do things on a schedule: "Every morning at 7am, check my email and calendar." No config files needed — just describe what you want in plain English. See [crons/README.md](crons/README.md) for inspiration.
 
 ### Bootstrap
 
-The first time your agent runs, it finds `BOOTSTRAP.md` and has a real conversation with you. Not a form — a conversation. It figures out its personality, learns your preferences, sets boundaries, and writes everything to the workspace files. Then it deletes `BOOTSTRAP.md` because it doesn't need a birth certificate anymore.
+The first time your agent runs, it has a real conversation with you. Not a form — a conversation. It figures out its name, personality, humor level, and your preferences. Then it writes everything to the workspace files so every future session starts from that foundation.
+
+---
+
+## What's Inside
+
+| Folder | What It Does |
+|--------|-------------|
+| `skills/` | Tool skills with examples (Twitter, Notion, meeting summaries) and a template |
+| `crons/` | Automation inspiration and how to set them up |
+| `client-kit/` | Onboarding docs for anyone setting up their own agent |
+| `docs/` | Design philosophy, skill creation guide, writing style template |
+| `scripts/` | Setup and update helpers |
+| `memory/` | Where daily memory files live (starts empty) |
 
 ---
 
 ## Customization
 
-Every file in this repo is a starting point. The comments tell you what to change.
+Every file is a starting point. Edit whatever you want:
 
-- **Want a different personality?** Edit `SOUL.md`.
-- **Need new tools?** Create a skill in `skills/` using `SKILL-TEMPLATE.md`.
-- **Want scheduled tasks?** Add cron configs in `crons/`.
-- **Running this for a client?** Hand them the `client-kit/` folder.
-
-Read [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) for the design principles behind these choices.
+- **Different personality?** Edit `SOUL.md` (or just tell your agent to change).
+- **New tools?** Copy `skills/SKILL-TEMPLATE.md` and fill it in.
+- **Automations?** Just ask your agent to set them up.
 
 ---
 
 ## Documentation
 
-- [Philosophy & Design Principles](docs/PHILOSOPHY.md)
-- [Creating Skills](docs/SKILL-CREATION.md)
-- [Writing Style Guide Template](docs/WRITING-STYLE-GUIDE.md)
-- [OpenClaw Documentation](https://docs.openclaw.ai)
+- [Philosophy & Design Principles](docs/PHILOSOPHY.md) — Why things are built this way
+- [Creating Skills](docs/SKILL-CREATION.md) — How to teach your agent new tools
+- [Writing Style Guide](docs/WRITING-STYLE-GUIDE.md) — Template for content creation
+- [OpenClaw Docs](https://docs.openclaw.ai) — The runtime that powers everything
 
 ---
 
 ## Contributing
 
-This repo reflects patterns tested in production. If you've found something that works better, open an issue or PR. Practical beats theoretical.
-
----
+This repo reflects patterns tested in production. If you've found something that works better, open an issue or PR.
 
 ## License
 
