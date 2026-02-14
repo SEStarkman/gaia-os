@@ -6,7 +6,7 @@ _Skills from production, not a lab._
 
 Most AI agent setups start from scratch every time. You install the runtime, connect a channel, and then... figure out the hard parts yourself. How should memory work? What happens when the agent wakes up? How do you stop it from hallucinating commands? How do you make it actually useful on day two, week two, month two?
 
-GAIA OS exists because someone already figured this out the hard way. These aren't theoretical best practices. They're patterns that survived hundreds of real sessions — the mistakes that got documented, the conventions that actually stuck, the memory architecture that didn't fall apart.
+GAIA OS exists because someone already figured this out the hard way. These aren't theoretical best practices. They're patterns that survived hundreds of real sessions: the mistakes that got documented, the conventions that actually stuck, the memory architecture that didn't fall apart.
 
 ## Design Principles
 
@@ -22,8 +22,8 @@ The single most important thing in a long-running AI agent is memory. Without it
 
 GAIA OS uses a two-tier memory system:
 
-- **Daily files** (`memory/YYYY-MM-DD.md`) — Raw journal entries. What happened today. Written in real-time.
-- **Curated memory** (`MEMORY.md`) — The distilled long-term memory. Periodically reviewed and updated from daily files.
+- **Daily files** (`memory/YYYY-MM-DD.md`): Raw journal entries. What happened today. Written in real-time.
+- **Curated memory** (`MEMORY.md`): The distilled long-term memory. Periodically reviewed and updated from daily files.
 
 This mirrors how humans actually remember things: you experience events (daily files), then your brain consolidates the important stuff into long-term memory while you sleep (weekly review). The daily files are the journal. MEMORY.md is the wisdom.
 
@@ -62,8 +62,8 @@ GAIA OS includes a battle-tested bootstrap flow that turns the first conversatio
 
 The agent has access to your life. Messages, files, maybe your calendar and email. That access comes with rules:
 
-- **Internal actions are free.** Reading, organizing, learning — go ahead.
-- **External actions require permission.** Emails, tweets, anything public — ask first.
+- **Internal actions are free.** Reading, organizing, learning. Go ahead.
+- **External actions require permission.** Emails, tweets, anything public. Ask first.
 - **Memory has access controls.** MEMORY.md only loads in private sessions, never in group chats.
 - **Recoverable > destructive.** `trash` over `rm`. Always.
 
@@ -84,4 +84,4 @@ The workspace is the brain. Files are the neurons. Writing things down is how th
 
 ## The Net
 
-GAIA OS is opinionated because opinions are what separate a useful system from an empty template. Every convention here exists because the alternative was tried and failed. You're welcome to change anything — but at least you're starting from something that works.
+GAIA OS is opinionated because opinions are what separate a useful system from an empty template. Every convention here exists because the alternative was tried and failed. You're welcome to change anything, but at least you're starting from something that works.

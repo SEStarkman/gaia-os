@@ -39,8 +39,8 @@ source ~/.secrets.env
 tool action "argument" --flag VALUE
 ```
 
-- `"argument"` — what this is
-- `--flag VALUE` — what this controls
+- `"argument"`: what this is
+- `--flag VALUE`: what this controls
 
 ### Command Two
 
@@ -52,7 +52,7 @@ tool other-action --option
 
 <!-- List commands the agent might hallucinate. This prevents real mistakes. -->
 
-- ~~`tool wrong-command`~~ — DOES NOT EXIST. Use `tool right-command` instead.
+- ~~`tool wrong-command`~~ DOES NOT EXIST. Use `tool right-command` instead.
 
 ## Common Patterns
 

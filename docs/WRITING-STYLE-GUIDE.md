@@ -2,8 +2,8 @@
 
 <!-- 
 This is a template writing style guide for your agent. Customize the voice, platform strategy,
-and examples for your own use. The STRUCTURE and BANNED PATTERNS are universally useful — 
-they prevent AI-generated content from sounding like AI-generated content.
+and examples for your own use. The STRUCTURE and BANNED PATTERNS are universally useful.
+They prevent AI-generated content from sounding like AI-generated content.
 -->
 
 _Writing in your voice, optimized for the platforms you use._
@@ -61,7 +61,7 @@ _Writing in your voice, optimized for the platforms you use._
 - Make a surprising claim or statement of fact
 - State something concrete that happened
 - Say something bold enough that people need to keep reading
-- Let the "how" or "why" remain unanswered — that's what pulls them in
+- Let the "how" or "why" remain unanswered. That's what pulls them in.
 
 **Examples of strong openers:**
 ```
@@ -89,18 +89,18 @@ additionally, furthermore, moreover, testament to, landscape (as metaphor), show
 
 ### Banned AI Structures
 
-- **Contrasting pairs** — state your point directly instead of:
+- **Contrasting pairs.** State your point directly instead of:
   - "It's not X, it's Y" / "It's not just X, it's Y"
   - "Don't do A. Do B." / "Stop X. Start Y."
   - "Not only...but also" / "Less X, more Y"
   - "Without X? Y. With X? Z."
   - Any structure that sets up a false dichotomy or contrast
-- **Echo sentences** — "It sounds X. It was X." or "It seemed Y. It was Y."
-- **"Here's what nobody..." / "Here's the part no one talks about"** — just say it directly
-- Forced rule of three — use natural quantities
-- Synonym cycling ("app...platform...tool") — repeat the clearest term
-- "From X to Y" false ranges — be specific
-- "Serves as," "functions as" — just say "is"
+- **Echo sentences.** "It sounds X. It was X." or "It seemed Y. It was Y."
+- **"Here's what nobody..." / "Here's the part no one talks about."** Just say it directly.
+- Forced rule of three. Use natural quantities.
+- Synonym cycling ("app...platform...tool"). Repeat the clearest term.
+- "From X to Y" false ranges. Be specific.
+- "Serves as," "functions as." Just say "is."
 
 ### Banned Hooks
 
@@ -109,14 +109,14 @@ additionally, furthermore, moreover, testament to, landscape (as metaphor), show
 - Question openers ("Want to know how I...?")
 - "Most people think X. The reality is different."
 - "[Time] ago, I [situation]. It changed everything."
-- Fabricated hooks — NEVER invent a scenario that didn't happen
+- Fabricated hooks. NEVER invent a scenario that didn't happen.
 
 ### Banned Tones
 
 - Significance inflation ("pivotal moment," "revolutionary," "game-changing")
 - Promotional language ("unparalleled," "best-in-class")
-- Vague attributions ("experts agree") — name the source or drop it
-- Generic conclusions ("time will tell") — end with specifics or questions
+- Vague attributions ("experts agree"). Name the source or drop it.
+- Generic conclusions ("time will tell"). End with specifics or questions.
 
 ### Formatting Violations
 
@@ -141,8 +141,8 @@ additionally, furthermore, moreover, testament to, landscape (as metaphor), show
 - [ ] No AI vocabulary or structures
 - [ ] Has personality and opinions
 - [ ] Would I respond to this?
-- [ ] Factually accurate — nothing fabricated
+- [ ] Factually accurate. Nothing fabricated.
 
 ---
 
-_Customize this guide with your specific voice, topics, and platform strategy. The banned patterns section is universal — keep it as-is._
+_Customize this guide with your specific voice, topics, and platform strategy. The banned patterns section is universal. Keep it as-is._

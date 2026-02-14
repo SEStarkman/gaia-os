@@ -46,11 +46,11 @@ bird user-tweets @HANDLE -n COUNT --plain
 
 ## CRITICAL: Commands That DO NOT Exist
 
-- ~~`bird view`~~ — DOES NOT EXIST. Use `bird read` instead.
-- ~~`bird tweet`~~ — DOES NOT EXIST for reading. Use `bird read` for fetching tweets.
-- ~~`bird timeline`~~ — DOES NOT EXIST. Use `bird user-tweets` instead.
-- ~~`bird fetch`~~ — DOES NOT EXIST. Use `bird read` instead.
-- ~~`bird get`~~ — DOES NOT EXIST. Use `bird read` instead.
+- ~~`bird view`~~ DOES NOT EXIST. Use `bird read` instead.
+- ~~`bird tweet`~~ DOES NOT EXIST for reading. Use `bird read` for fetching tweets.
+- ~~`bird timeline`~~ DOES NOT EXIST. Use `bird user-tweets` instead.
+- ~~`bird fetch`~~ DOES NOT EXIST. Use `bird read` instead.
+- ~~`bird get`~~ DOES NOT EXIST. Use `bird read` instead.
 
 ## Output Capping
 
