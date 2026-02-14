@@ -4,7 +4,7 @@ A detailed guide to building skills that actually work in production.
 
 ## What Is a Skill?
 
-A skill is a markdown file that teaches your agent how to use a tool. It lives at `skills/tool-name/SKILL.md` and contains everything the agent needs: authentication, commands, patterns, and — critically — what NOT to do.
+A skill is a markdown file that teaches your agent how to use a tool. It lives at `skills/tool-name/SKILL.md` and contains everything the agent needs: authentication, commands, patterns, and (critically) what NOT to do.
 
 ## The Description Is Routing Logic
 
@@ -25,8 +25,8 @@ OpenClaw reads this description to decide which skill to load. If the descriptio
 - "Use when given a meeting transcript to process into a structured summary."
 
 **Bad descriptions:**
-- "Twitter stuff" (too vague — when does this activate?)
-- "Useful tool for many things" (meaningless — this matches everything and nothing)
+- "Twitter stuff" (too vague. When does this activate?)
+- "Useful tool for many things" (meaningless. This matches everything and nothing.)
 - "CLI tool" (which CLI tool? For what?)
 
 ### Tips for Descriptions
@@ -77,25 +77,25 @@ bird search "query terms" -n COUNT --plain
 
 ### 3. Negative Examples (The Most Important Section)
 
-This is where most skills fail. AI agents hallucinate commands with total confidence. If `bird view` doesn't exist, the agent will try it anyway — unless you explicitly say it doesn't exist.
+This is where most skills fail. AI agents hallucinate commands with total confidence. If `bird view` doesn't exist, the agent will try it anyway, unless you explicitly say it doesn't exist.
 
 ```markdown
 ## CRITICAL: Commands That DO NOT Exist
 
-- ~~`bird view`~~ — DOES NOT EXIST. Use `bird read` instead.
-- ~~`bird tweet`~~ — DOES NOT EXIST for reading. Use `bird read`.
-- ~~`bird timeline`~~ — DOES NOT EXIST. Use `bird user-tweets` instead.
+- ~~`bird view`~~ DOES NOT EXIST. Use `bird read` instead.
+- ~~`bird tweet`~~ DOES NOT EXIST for reading. Use `bird read`.
+- ~~`bird timeline`~~ DOES NOT EXIST. Use `bird user-tweets` instead.
 ```
 
 **How to build this section:**
 1. Use the tool yourself for a week
 2. Note every time the agent uses a wrong command
 3. Add it to the negative examples
-4. This section grows over time — that's normal
+4. This section grows over time. That's normal.
 
 ### 4. Common Patterns
 
-Recipes for real workflows. Not abstract descriptions — actual command sequences.
+Recipes for real workflows. Not abstract descriptions. Actual command sequences.
 
 ```markdown
 ### Search + filter by engagement

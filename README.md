@@ -5,36 +5,46 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![OpenClaw](https://img.shields.io/badge/Powered%20by-OpenClaw-purple)](https://docs.openclaw.ai)
 
-GAIA OS gives your AI agent structure — memory that persists between conversations, a personality that sticks, skills for your favorite tools, and automations that run on schedule. Clone it, install [OpenClaw](https://docs.openclaw.ai), and start chatting. Your agent handles the rest.
+GAIA OS gives your AI agent structure. Memory that persists between conversations. A personality that sticks. Skills for your favorite tools. Automations that run on schedule. Clone it, install [OpenClaw](https://docs.openclaw.ai), and start chatting. Your agent handles the rest.
 
 ---
 
 ## What You Get
 
-- **Memory that lasts.** Your agent remembers what happened yesterday, last week, and last month — even though it wakes up fresh every session.
-- **A real personality.** Not a generic chatbot. Your agent figures out who it is through a first-run conversation with you.
+- **Memory that lasts.** Your agent remembers what happened yesterday, last week, and last month, even though it wakes up fresh every session.
+
+- **A real personality.** Your agent figures out who it is through a first-run conversation with you. No generic chatbot energy.
+
 - **Skills for your tools.** Teach your agent how to use Notion, Twitter, or anything else with simple markdown files.
-- **Automations.** Morning briefings, content scanning, reminders, weekly reviews — just tell your agent what you want and when.
+
+- **Automations.** Morning briefings, content scanning, reminders, weekly reviews. Just tell your agent what you want and when.
+
 - **Battle-tested conventions.** Safety rules, group chat etiquette, and proactive work guidelines from hundreds of real sessions.
 
 ## Quick Start
 
-### 1. Install OpenClaw
-
-Follow the [OpenClaw setup guide](https://docs.openclaw.ai/getting-started).
-
-### 2. Clone this repo
+### 1. Clone this repo
 
 ```bash
 git clone https://github.com/SEStarkman/gaia-os.git ~/gaia
 cd ~/gaia
 ```
 
-### 3. Run setup
+### 2. Install OpenClaw
 
 ```bash
-bash scripts/setup.sh
+npm i -g openclaw
 ```
+
+(`-g` installs it globally so `openclaw` works as a command from anywhere)
+
+### 3. Run onboarding
+
+```bash
+openclaw onboard
+```
+
+When it asks for your workspace path, point it at `~/gaia` (or wherever you cloned). This sets up your API key, Telegram bot, and config. Because the workspace files already exist from the clone, OpenClaw uses them instead of creating blank defaults.
 
 ### 4. Start chatting
 
@@ -42,7 +52,7 @@ bash scripts/setup.sh
 openclaw gateway start
 ```
 
-Send your first message. Your agent will introduce itself, learn about you, and set up its own personality. That's it — you're running.
+Send your first message. Your agent will introduce itself, learn about you, and set up its own personality. That's it. You're running.
 
 ---
 
@@ -50,24 +60,27 @@ Send your first message. Your agent will introduce itself, learn about you, and 
 
 Your agent wakes up with no memory each session. These files fix that:
 
-- **SOUL.md** — Your agent's personality. Built during the first conversation, evolves over time.
-- **USER.md** — What your agent knows about you. Updated as it learns.
-- **MEMORY.md** — Long-term memory. The important stuff, curated over time.
-- **memory/YYYY-MM-DD.md** — Daily journal. What happened today.
+- **SOUL.md** is your agent's personality. Built during the first conversation, evolves over time.
+
+- **USER.md** is what your agent knows about you. Updated as it learns.
+
+- **MEMORY.md** is long-term memory. The important stuff, curated over time.
+
+- **memory/YYYY-MM-DD.md** files are daily journals. What happened today.
 
 Every session, the agent reads these files first. That's how it remembers.
 
 ### Skills
 
-Skills are markdown files that teach your agent how to use a tool — the commands, the auth, the gotchas. See `skills/` for examples and a template to create your own.
+Skills are markdown files that teach your agent how to use a tool. The commands, the auth, the gotchas. See `skills/` for examples and a template to create your own.
 
 ### Automations
 
-Tell your agent to do things on a schedule: "Every morning at 7am, check my email and calendar." No config files needed — just describe what you want in plain English. See [crons/README.md](crons/README.md) for inspiration.
+Tell your agent to do things on a schedule: "Every morning at 7am, check my email and calendar." No config files needed. Just describe what you want in plain English. See [crons/README.md](crons/README.md) for inspiration.
 
 ### Bootstrap
 
-The first time your agent runs, it has a real conversation with you. Not a form — a conversation. It figures out its name, personality, humor level, and your preferences. Then it writes everything to the workspace files so every future session starts from that foundation.
+The first time your agent runs, it has a real conversation with you. Not a form. A conversation. It figures out its name, personality, humor level, and your preferences. Then it writes everything to the workspace files so every future session starts from that foundation.
 
 ---
 
@@ -88,18 +101,20 @@ The first time your agent runs, it has a real conversation with you. Not a form 
 
 Every file is a starting point. Edit whatever you want:
 
-- **Different personality?** Edit `SOUL.md` (or just tell your agent to change).
+- **Different personality?** Edit `SOUL.md` or just tell your agent to change.
+
 - **New tools?** Copy `skills/SKILL-TEMPLATE.md` and fill it in.
+
 - **Automations?** Just ask your agent to set them up.
 
 ---
 
 ## Documentation
 
-- [Philosophy & Design Principles](docs/PHILOSOPHY.md) — Why things are built this way
-- [Creating Skills](docs/SKILL-CREATION.md) — How to teach your agent new tools
-- [Writing Style Guide](docs/WRITING-STYLE-GUIDE.md) — Template for content creation
-- [OpenClaw Docs](https://docs.openclaw.ai) — The runtime that powers everything
+- [Philosophy & Design Principles](docs/PHILOSOPHY.md)
+- [Creating Skills](docs/SKILL-CREATION.md)
+- [Writing Style Guide](docs/WRITING-STYLE-GUIDE.md)
+- [OpenClaw Docs](https://docs.openclaw.ai)
 
 ---
 
@@ -109,7 +124,7 @@ This repo reflects patterns tested in production. If you've found something that
 
 ## License
 
-MIT — do whatever you want with it.
+MIT. Do whatever you want with it.
 
 ---
 

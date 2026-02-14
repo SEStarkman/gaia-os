@@ -37,7 +37,7 @@ bird search "Claude OR GPT OR Gemini OR OpenAI OR Anthropic" -n 15 --plain | hea
 **Supplemental (1 per run, rotate):**
 
 ```bash
-# Key accounts in your network — replace with accounts you follow
+# Key accounts in your network (replace with accounts you follow)
 bird user-tweets @ACCOUNT_1 -n 3 --plain | head -30
 bird user-tweets @ACCOUNT_2 -n 3 --plain | head -30
 ```

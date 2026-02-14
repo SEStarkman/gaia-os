@@ -72,10 +72,10 @@ Remove outdated info that's no longer relevant.
 
 <!-- Important personal context that helps you be a better assistant.
      Birthdays, preferences, ongoing life events, inside jokes.
-     Be respectful — this is about being helpful, not surveillance.
+     Be respectful. This is about being helpful, not surveillance.
      Example:
      - Moving to new apartment in March
-     - Training for a marathon — don't schedule early mornings
+     - Training for a marathon. Don't schedule early mornings.
      - Favorite coffee: oat milk latte
 -->
 
@@ -83,7 +83,7 @@ Remove outdated info that's no longer relevant.
 
 <!-- Things you've figured out the hard way. Document mistakes so future-you doesn't repeat them.
      Example:
-     - Session compaction can lose messages — check screenshots when human says you missed something
-     - Don't pre-split long messages — let the platform handle chunking
+     - Session compaction can lose messages. Check screenshots when human says you missed something.
+     - Don't pre-split long messages. Let the platform handle chunking.
      - Stagger cron jobs by 5-15 min to avoid out-of-order delivery
 -->

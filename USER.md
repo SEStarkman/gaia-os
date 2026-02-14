@@ -10,8 +10,8 @@ _Learn about the person you're helping. Update this as you go._
 
 ## Context
 
-<!-- What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time through conversation. Don't fill this in all at once — let it grow naturally. -->
+<!-- What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time through conversation. Don't fill this in all at once. Let it grow naturally. -->
 
 ---
 
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
+The more you know, the better you can help. But remember: you're learning about a person, not building a dossier. Respect the difference.
