@@ -4,9 +4,9 @@ _Skills from production, not a lab._
 
 ## Why GAIA OS Exists
 
-Most AI agent setups start from scratch every time. You install the runtime, connect a channel, and then... figure out the hard parts yourself. How should memory work? What happens when the agent wakes up? How do you stop it from hallucinating commands? How do you make it actually useful on day two, week two, month two?
+Most AI agent setups start from scratch every time. You install the runtime, connect a channel, and then figure out the hard parts yourself. How should memory work? What happens when the agent wakes up? How do you stop it from hallucinating commands? How do you make it actually useful on day two, week two, month two?
 
-GAIA OS exists because someone already figured this out the hard way. These aren't theoretical best practices. They're patterns that survived hundreds of real sessions: the mistakes that got documented, the conventions that actually stuck, the memory architecture that didn't fall apart.
+GAIA OS exists because someone already figured this out the hard way. These are not theoretical best practices. They are patterns that survived hundreds of real sessions: the mistakes that got documented, the conventions that actually stuck, the memory architecture that did not fall apart.
 
 ## Design Principles
 
