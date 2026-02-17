@@ -8,7 +8,7 @@ This guide walks you through setting up a personal AI agent on Google Cloud with
 - A Google account with a billing method
 - Telegram installed on your phone and desktop
 - Your filled-in [initialization template](../INITIALIZATION-PROMPT.md)
-- An Anthropic API key ([get one here](https://console.anthropic.com/))
+- An Anthropic API key or Claude Pro/Max subscription (see [Step 6](#6-connect-your-anthropic-account))
 
 ---
 
@@ -58,15 +58,57 @@ The script installs everything automatically: system packages, Node.js, OpenClaw
 
 This takes about 5 minutes. Just follow the prompts.
 
-## 6. Add Your API Key
+## 6. Connect Your Anthropic Account
 
-Once the script finishes, run:
+There are two ways to authenticate with Anthropic. Pick whichever fits your situation.
+
+### Option A: API Key (pay per token)
+
+Best if you don't have a Claude subscription, or you want usage-based billing with full control over costs.
+
+1. Go to [console.anthropic.com](https://console.anthropic.com/)
+2. Create an account (or sign in)
+3. Add a payment method under **Billing**
+4. Go to **API Keys** and create a new key
+5. Back in your VM terminal, run:
 
 ```bash
 openclaw configure
 ```
 
-Paste your Anthropic API key when prompted.
+6. Paste the API key when prompted
+
+**Pricing:** You pay per token used. Costs vary by model. See [Anthropic's pricing page](https://www.anthropic.com/pricing) for details.
+
+### Option B: Setup Token (use your Claude Pro/Max subscription)
+
+Best if you already pay for Claude Pro ($20/mo) or Claude Max ($100/mo). This lets your agent use your existing subscription instead of paying separately for API access.
+
+1. On any computer where you have the Claude CLI installed, run:
+
+```bash
+claude setup-token
+```
+
+2. Copy the token it outputs
+3. In your VM terminal, run:
+
+```bash
+openclaw models auth setup-token --provider anthropic
+```
+
+4. Paste the token when prompted
+5. Verify it worked:
+
+```bash
+openclaw models status
+```
+
+You should see your Anthropic account listed with a valid token.
+
+**Don't have the Claude CLI?** Install it first with `npm install -g @anthropic-ai/claude-code`, then run `claude setup-token`.
+
+**Note:** Subscription auth shares your existing Claude usage limits. If you're a heavy Claude user and your agent is also active, you may hit rate limits faster than with a separate API key.
 
 ## 7. Start the Agent
 
