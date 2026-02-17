@@ -16,7 +16,7 @@ echo ""
 # ----------------------------------------------------------
 # Step 1: System packages
 # ----------------------------------------------------------
-echo "[1/6] Updating system packages..."
+echo "[1/7] Updating system packages..."
 sudo apt update -y && sudo apt upgrade -y
 sudo apt install -y git build-essential curl tmux
 echo "  Done."
@@ -25,7 +25,7 @@ echo ""
 # ----------------------------------------------------------
 # Step 2: Node.js 20.x
 # ----------------------------------------------------------
-echo "[2/6] Installing Node.js 20.x..."
+echo "[2/7] Installing Node.js 20.x..."
 if command -v node &> /dev/null; then
     NODE_VER=$(node -v)
     echo "  Node.js already installed: $NODE_VER"
@@ -40,7 +40,7 @@ echo ""
 # ----------------------------------------------------------
 # Step 3: Install OpenClaw
 # ----------------------------------------------------------
-echo "[3/6] Installing OpenClaw..."
+echo "[3/7] Installing OpenClaw..."
 if command -v openclaw &> /dev/null; then
     echo "  OpenClaw already installed: $(openclaw --version 2>/dev/null || echo 'version unknown')"
     echo "  Updating to latest..."
@@ -53,20 +53,41 @@ echo ""
 # Step 4: Create workspace
 # ----------------------------------------------------------
 WORKSPACE="$HOME/gaia"
-echo "[4/6] Setting up workspace at $WORKSPACE..."
+REPO_URL="https://raw.githubusercontent.com/SEStarkman/gaia-os/master"
+echo "[4/7] Setting up workspace at $WORKSPACE..."
 mkdir -p "$WORKSPACE"
 mkdir -p "$WORKSPACE/memory"
 mkdir -p "$WORKSPACE/skills"
 mkdir -p "$WORKSPACE/scripts"
 mkdir -p "$WORKSPACE/data"
 mkdir -p "$WORKSPACE/output"
+
+# Download workspace template files
+echo "  Downloading workspace templates..."
+TEMPLATES="AGENTS.md SOUL.md USER.md IDENTITY.md MEMORY.md TOOLS.md BOOTSTRAP.md HEARTBEAT.md"
+for file in $TEMPLATES; do
+    if [ ! -f "$WORKSPACE/$file" ]; then
+        curl -sL "$REPO_URL/templates/$file" -o "$WORKSPACE/$file" 2>/dev/null && \
+            echo "    ✓ $file" || \
+            echo "    ✗ $file (download failed, will be created by agent)"
+    else
+        echo "    - $file (already exists, skipping)"
+    fi
+done
+
+# Also grab the initialization prompt for reference
+if [ ! -f "$WORKSPACE/INITIALIZATION-PROMPT.md" ]; then
+    curl -sL "$REPO_URL/INITIALIZATION-PROMPT.md" -o "$WORKSPACE/INITIALIZATION-PROMPT.md" 2>/dev/null && \
+        echo "    ✓ INITIALIZATION-PROMPT.md" || true
+fi
+
 echo "  Workspace created."
 echo ""
 
 # ----------------------------------------------------------
 # Step 5: Telegram bot setup (interactive)
 # ----------------------------------------------------------
-echo "[5/6] Telegram Bot Setup"
+echo "[5/7] Telegram Bot Setup"
 echo ""
 echo "  You need a Telegram bot token from @BotFather."
 echo "  Open Telegram, search for @BotFather, send /newbot,"
@@ -78,7 +99,7 @@ echo ""
 # ----------------------------------------------------------
 # Step 6: Run OpenClaw onboarding
 # ----------------------------------------------------------
-echo "[6/6] Running OpenClaw onboarding..."
+echo "[6/7] Running OpenClaw onboarding..."
 echo ""
 
 if [ -n "$BOT_TOKEN" ]; then
@@ -132,8 +153,9 @@ else
 fi
 
 # ----------------------------------------------------------
-# Optional: Set up systemd service
+# Step 7: Optional systemd service
 # ----------------------------------------------------------
+echo "[7/7] Auto-start setup"
 echo ""
 read -p "  Set up auto-start on reboot? (y/n): " AUTOSTART
 
