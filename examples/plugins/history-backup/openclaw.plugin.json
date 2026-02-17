@@ -1,0 +1,21 @@
+{
+  "id": "history-backup",
+  "name": "History Backup",
+  "version": "1.0.0",
+  "description": "Saves full conversation history before compaction/truncation so context is never lost",
+  "main": "index.js",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "outputDir": {
+        "type": "string",
+        "description": "Directory to save history backups (default: workspace/memory/history)"
+      }
+    }
+  }
+}
