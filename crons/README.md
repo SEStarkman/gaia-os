@@ -80,4 +80,4 @@ Your agent filters the noise so you don't have to.
 
 ---
 
-For more on how automations relate to skills (the "what" vs "when" concept), see [docs/PHILOSOPHY.md](../docs/PHILOSOPHY.md).
+For more on how automations relate to skills (the "what" vs "when" concept), see the [Philosophy and Design Principles](../docs/PHILOSOPHY.md) document.

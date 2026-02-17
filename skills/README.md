@@ -57,7 +57,7 @@ Every skill should include a "DO NOT" section. The mistakes you prevent matter a
 
 3. Test it by asking your agent to do something that should trigger the skill.
 
-See [docs/SKILL-CREATION.md](../docs/SKILL-CREATION.md) for a detailed guide.
+See the [Skill Creation Guide](../docs/SKILL-CREATION.md) for a detailed walkthrough.
 
 ## Skill + Cron Relationship
 
@@ -70,7 +70,7 @@ A cron job references a skill but adds timing, output format, and delivery instr
 - Update the skill without touching any cron configs
 - Update cron timing without touching the skill
 
-See [crons/README.md](../crons/README.md) for more on scheduling.
+See the [Automations Guide](../crons/README.md) for more on scheduling.
 
 ## Example Skills
 
