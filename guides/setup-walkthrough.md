@@ -1,126 +1,122 @@
-# AI Agent Onboarding: Setup Walkthrough
+# Setting Up Your AI Agent
 
-_Step-by-step guide for setting up a client's personal AI agent on GCP with OpenClaw + Telegram._
+This guide walks you through setting up a personal AI agent on Google Cloud with OpenClaw and Telegram. By the end, you'll have an always-on agent you can message from your phone.
 
----
+**Total time:** ~40 minutes
 
-## Pre-Call Checklist
-
-- Client has a Google account with billing method ready
-- Client can access console.cloud.google.com
-- Client has Telegram installed (phone + desktop)
-- Client has filled in the initialization template you sent them
-- Client has an Anthropic API key (or you'll help them get one)
+**What you'll need:**
+- A Google account with a billing method
+- Telegram installed on your phone and desktop
+- Your filled-in [initialization template](../INITIALIZATION-PROMPT.md)
+- An Anthropic API key ([get one here](https://console.anthropic.com/))
 
 ---
 
-## Step 1: Create GCP Project (walk them through in browser)
+## 1. Create a Google Cloud Project
 
-1. Google Cloud Console → top bar → **Select project** → **New Project**
-2. Name: `gaia-agent` (or client's choice)
-3. Billing account: select theirs
-4. After project creates, click it to switch to it
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Click **Select project** in the top bar, then **New Project**
+3. Name it something like `gaia-agent`
+4. Select your billing account and click **Create**
+5. Once it's ready, click on it to switch to it
 
-## Step 2: Enable Compute Engine
+## 2. Enable Compute Engine
 
-1. Left nav → **Compute Engine**
-2. Click **Enable** when prompted (takes ~2 minutes)
+1. In the left navigation, click **Compute Engine**
+2. Click **Enable** when prompted (this takes a couple minutes)
 
-## Step 3: Create the VM
+## 3. Create the VM
 
-1. Compute Engine → **VM instances** → **Create instance**
-2. Settings:
+1. Go to **Compute Engine → VM instances → Create instance**
+2. Use these settings:
    - **Name:** `gaia-agent`
-   - **Region:** `us-central1` (cheapest, most stable)
+   - **Region:** `us-central1` (cheapest and most stable)
    - **Machine type:** `e2-standard-2` (2 vCPU, 8 GB RAM)
-   - **Boot disk:** Debian 12, 50 GB standard persistent disk
-   - **Firewall:** check both Allow HTTP + Allow HTTPS
-3. Click **Create**, wait for status = Running
+   - **Boot disk:** Click **Change**, select Debian 12, set size to 50 GB
+   - **Firewall:** Check both **Allow HTTP traffic** and **Allow HTTPS traffic**
+3. Click **Create** and wait for the green checkmark
 
-## Step 4: Create Telegram Bot (while VM spins up)
+## 4. Create a Telegram Bot
 
-1. In Telegram, open **@BotFather**
-2. Send `/start` then `/newbot`
-3. Give it a name and username
-4. Copy the **HTTP API token**. They'll need it in a minute.
+While the VM is spinning up:
 
-## Step 5: Run the Setup Script (one command)
+1. Open Telegram and search for **@BotFather**
+2. Send `/start`, then `/newbot`
+3. Follow the prompts to name your bot and pick a username
+4. Copy the **HTTP API token** it gives you. You'll need this in a minute.
 
-1. In VM list, click **SSH** to open browser terminal
-2. Have them run:
+## 5. Run the Setup Script
+
+1. Back in Google Cloud, click **SSH** next to your VM to open a terminal
+2. Run this single command:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/SEStarkman/gaia-os/master/scripts/setup.sh | bash
 ```
 
-The script handles everything automatically:
-- System packages (git, curl, build tools)
-- Node.js 20.x
-- OpenClaw installation
-- Workspace creation at ~/gaia
-- Prompts for the Telegram bot token (they paste it)
-- Writes the OpenClaw config with Telegram enabled
-- Optional: sets up auto-start on reboot (systemd service)
+The script installs everything automatically: system packages, Node.js, OpenClaw, and the workspace structure. It will ask you to paste your Telegram bot token and whether you want auto-start on reboot.
 
-**You just watch and answer questions.** Total time: ~5 minutes.
+This takes about 5 minutes. Just follow the prompts.
 
-## Step 6: Configure Anthropic API Key
+## 6. Add Your API Key
+
+Once the script finishes, run:
 
 ```bash
 openclaw configure
 ```
 
-Walk them through adding their Anthropic API key when prompted.
+Paste your Anthropic API key when prompted.
 
-## Step 7: Start the Agent
+## 7. Start the Agent
 
 ```bash
 openclaw gateway start
 ```
 
-## Step 8: Pair Telegram + Initialize
+## 8. Initialize Your Agent
 
-1. In Telegram, search for their bot username, click **Start**
-2. Client pastes their filled-in **initialization template** as the first message
-3. Agent auto-configures SOUL.md, USER.md, IDENTITY.md, MEMORY.md
-4. Verify: `ls ~/gaia/` should show the new .md files
+1. Open Telegram and search for your bot's username
+2. Tap **Start**
+3. Paste your filled-in initialization template as the first message
+4. The agent reads it and configures itself: personality, memory, preferences, everything from your template
 
-## Step 9: Post-Setup Verification
+To verify it worked, run `ls ~/gaia/` in the SSH terminal. You should see files like `SOUL.md`, `USER.md`, `IDENTITY.md`, and `MEMORY.md`.
 
-1. **Test tools:** Ask the agent to "run `ls` in the workspace"
-2. **Check status:** `openclaw gateway status`
-3. **Show stop/start:** `openclaw gateway stop` / `openclaw gateway start`
+## 9. Verify Everything Works
 
-## Step 10: Hand-Off
+A few quick checks:
 
-Share the gaia-os repo link for reference:
-- Command cheat sheet
-- Update guide (how to update OpenClaw)
-- Secret management guide
-- Explain that the agent learns over time as memory builds
-- Recommend taking a **Compute Engine snapshot** as a backup
+1. Ask the agent something in Telegram. It should respond.
+2. In SSH, run `openclaw gateway status` to confirm it's running.
+3. Try `openclaw gateway stop` and `openclaw gateway start` so you know how to restart it.
 
----
+## 10. You're Done
 
-## Timing Guide
+Your agent is live. A few things to know going forward:
 
-| Section | Time |
-|---------|------|
-| GCP Project + VM (Steps 1-3) | 10 min |
-| Telegram Bot (Step 4) | 5 min |
-| Setup Script (Step 5) | 5 min |
-| API Key + Start (Steps 6-7) | 3 min |
-| Pair + Initialize (Step 8) | 10 min |
-| Verify + Hand-off (Steps 9-10) | 5-10 min |
-| **Total** | **~40 min** |
+- The agent learns over time as it builds memory from your conversations
+- Reference guides are in this repo: [command cheat sheet](command-cheat-sheet.md), [updating OpenClaw](updating-openclaw.md), [secret management](secret-management.md)
+- Take a **Compute Engine snapshot** of your VM as a backup (Compute Engine → Snapshots → Create)
 
 ---
 
 ## Troubleshooting
 
-- **"command not found: openclaw"** → Script may have failed. Run `sudo npm i -g openclaw` manually.
-- **Bot not responding in Telegram** → Check `openclaw gateway status`, verify bot token is correct.
-- **"Permission denied"** on gateway start → Don't run as root. Run as the normal user.
-- **VM SSH disconnects** → Normal for browser SSH. Use `tmux` for persistent sessions.
-- **Agent gives generic responses** → Initialization template wasn't pasted. Have them paste it.
-- **Script fails on apt update** → VM might need a minute after creation. Wait, then re-run.
+**"command not found: openclaw"**
+The install script may have failed partway. Run `sudo npm i -g openclaw` manually.
+
+**Bot not responding in Telegram**
+Run `openclaw gateway status` to check if it's running. Double-check the bot token in `~/.openclaw/openclaw.json`.
+
+**"Permission denied" on gateway start**
+Don't run as root. Use your normal user account.
+
+**SSH terminal disconnects**
+Browser SSH can be flaky. Use `tmux` to keep sessions alive: run `tmux` before starting anything, and `tmux attach` to reconnect.
+
+**Agent gives generic/confused responses**
+The initialization template probably wasn't pasted. Send it as a message in Telegram.
+
+**Script fails on apt update**
+The VM might need a minute after creation to be fully ready. Wait 30 seconds and re-run the command.
