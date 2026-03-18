@@ -14,191 +14,81 @@ echo "========================================="
 echo ""
 
 # ----------------------------------------------------------
-# Step 1: System packages
+# Step 1: System prerequisites
 # ----------------------------------------------------------
-echo "[1/7] Updating system packages..."
-sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y git build-essential curl tmux
+echo "[1/5] Installing system prerequisites..."
+sudo apt update && sudo apt install -y git curl build-essential
 echo "  Done."
 echo ""
 
 # ----------------------------------------------------------
-# Step 2: Node.js 20.x
+# Step 2: Install Homebrew
 # ----------------------------------------------------------
-echo "[2/7] Installing Node.js 20.x..."
-if command -v node &> /dev/null; then
-    NODE_VER=$(node -v)
-    echo "  Node.js already installed: $NODE_VER"
+echo "[2/5] Installing Homebrew..."
+if command -v brew &> /dev/null; then
+    echo "  Homebrew already installed."
 else
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt install -y nodejs
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    echo "  Done."
+fi
+echo ""
+
+# ----------------------------------------------------------
+# Step 3: Install Node.js
+# ----------------------------------------------------------
+echo "[3/5] Installing Node.js..."
+if command -v node &> /dev/null; then
+    echo "  Node.js already installed: $(node -v)"
+else
+    brew install node
     echo "  Installed: $(node -v)"
 fi
 echo "  npm: $(npm -v)"
 echo ""
 
 # ----------------------------------------------------------
-# Step 3: Install OpenClaw
+# Step 4: Install OpenClaw
 # ----------------------------------------------------------
-echo "[3/7] Installing OpenClaw..."
+echo "[4/5] Installing OpenClaw..."
 if command -v openclaw &> /dev/null; then
     echo "  OpenClaw already installed: $(openclaw --version 2>/dev/null || echo 'version unknown')"
     echo "  Updating to latest..."
 fi
-sudo npm install -g openclaw
+npm install -g openclaw
 echo "  Done."
 echo ""
 
 # ----------------------------------------------------------
-# Step 4: Create workspace
+# Step 5: Run the setup wizard
 # ----------------------------------------------------------
-WORKSPACE="$HOME/gaia"
-REPO_URL="https://raw.githubusercontent.com/SEStarkman/gaia-os/master"
-echo "[4/7] Setting up workspace at $WORKSPACE..."
-mkdir -p "$WORKSPACE"
-mkdir -p "$WORKSPACE/memory"
-mkdir -p "$WORKSPACE/skills"
-mkdir -p "$WORKSPACE/scripts"
-mkdir -p "$WORKSPACE/data"
-mkdir -p "$WORKSPACE/output"
-
-# Download workspace template files
-echo "  Downloading workspace templates..."
-TEMPLATES="AGENTS.md SOUL.md USER.md IDENTITY.md MEMORY.md TOOLS.md BOOTSTRAP.md HEARTBEAT.md"
-for file in $TEMPLATES; do
-    if [ ! -f "$WORKSPACE/$file" ]; then
-        curl -sL "$REPO_URL/templates/$file" -o "$WORKSPACE/$file" 2>/dev/null && \
-            echo "    ✓ $file" || \
-            echo "    ✗ $file (download failed, will be created by agent)"
-    else
-        echo "    - $file (already exists, skipping)"
-    fi
-done
-
-# Also grab the initialization prompt for reference
-if [ ! -f "$WORKSPACE/INITIALIZATION-PROMPT.md" ]; then
-    curl -sL "$REPO_URL/INITIALIZATION-PROMPT.md" -o "$WORKSPACE/INITIALIZATION-PROMPT.md" 2>/dev/null && \
-        echo "    ✓ INITIALIZATION-PROMPT.md" || true
-fi
-
-echo "  Workspace created."
+echo "[5/5] Starting OpenClaw onboarding..."
 echo ""
-
-# ----------------------------------------------------------
-# Step 5: Telegram bot setup (interactive)
-# ----------------------------------------------------------
-echo "[5/7] Telegram Bot Setup"
+echo "  The wizard will ask you for:"
+echo "    - Your Claude OAuth token (from 'claude setup-token' on your local machine)"
+echo "      OR an Anthropic API key"
+echo "    - Your Telegram bot token (from @BotFather)"
 echo ""
-echo "  You need a Telegram bot token from @BotFather."
-echo "  Open Telegram, search for @BotFather, send /newbot,"
-echo "  follow the prompts, then paste the token below."
-echo ""
-read -p "  Paste your Telegram bot token (or press Enter to skip): " BOT_TOKEN
-echo ""
-
-# ----------------------------------------------------------
-# Step 6: Run OpenClaw onboarding
-# ----------------------------------------------------------
-echo "[6/7] Running OpenClaw onboarding..."
-echo ""
-
-if [ -n "$BOT_TOKEN" ]; then
-    # Create config directory
-    mkdir -p "$HOME/.openclaw"
-
-    # Write config with Telegram integration
-    cat > "$HOME/.openclaw/openclaw.json" << EOF
-{
-  "agents": {
-    "defaults": {
-      "workspace": "$WORKSPACE",
-      "thinkingDefault": "high"
-    }
-  },
-  "channels": {
-    "telegram": {
-      "enabled": true,
-      "botToken": "$BOT_TOKEN",
-      "dmPolicy": "pairing",
-      "groupPolicy": "allowlist",
-      "streamMode": "partial",
-      "linkPreview": false
-    }
-  },
-  "gateway": {
-    "port": 18789,
-    "mode": "local",
-    "bind": "loopback"
-  }
-}
-EOF
-    echo "  Config written with Telegram integration."
-    echo ""
-    echo "  Next steps:"
-    echo "  1. Add your Anthropic API key:"
-    echo "     openclaw configure"
-    echo ""
-    echo "  2. Start the agent:"
-    echo "     openclaw gateway start"
-    echo ""
-    echo "  3. Open Telegram, find your bot, and send /start"
-    echo ""
-    echo "  4. Paste your filled-in initialization template as your first message"
-    echo ""
-else
-    echo "  No bot token provided. Running interactive onboarding instead..."
-    echo "  (You can set up Telegram later)"
-    echo ""
-    openclaw onboard --workspace "$WORKSPACE"
-fi
-
-# ----------------------------------------------------------
-# Step 7: Optional systemd service
-# ----------------------------------------------------------
-echo "[7/7] Auto-start setup"
-echo ""
-read -p "  Set up auto-start on reboot? (y/n): " AUTOSTART
-
-if [ "$AUTOSTART" = "y" ] || [ "$AUTOSTART" = "Y" ]; then
-    USERNAME=$(whoami)
-
-    sudo tee /etc/systemd/system/openclaw.service > /dev/null << EOF
-[Unit]
-Description=OpenClaw AI Agent
-After=network.target
-
-[Service]
-Type=simple
-User=$USERNAME
-WorkingDirectory=$WORKSPACE
-ExecStart=$(which openclaw) gateway start --foreground
-Restart=always
-RestartSec=10
-Environment=HOME=/home/$USERNAME
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    sudo systemctl daemon-reload
-    sudo systemctl enable openclaw
-    echo "  Auto-start enabled. The agent will start on every reboot."
-    echo "  Commands: sudo systemctl start/stop/restart openclaw"
-else
-    echo "  Skipped. You can start manually with: openclaw gateway start"
-fi
+echo "  Ready? Starting in 3 seconds..."
+sleep 3
+openclaw onboard
 
 echo ""
 echo "========================================="
 echo "  Setup Complete!"
 echo "========================================="
 echo ""
-echo "  Workspace:  $WORKSPACE"
-echo "  Config:     ~/.openclaw/openclaw.json"
-echo "  Start:      openclaw gateway start"
-echo "  Stop:       openclaw gateway stop"
-echo "  Status:     openclaw gateway status"
-echo "  Update:     bash ~/gaia/scripts/update-openclaw.sh"
+echo "  Next steps:"
+echo "    1. Start the agent:  openclaw gateway start"
+echo "    2. Open Telegram, find your bot, send /start"
+echo "    3. Approve the pairing:"
+echo "       openclaw pairing approve telegram [PAIRING CODE]"
+echo ""
+echo "  Useful commands:"
+echo "    openclaw gateway start    Start the agent"
+echo "    openclaw gateway stop     Stop the agent"
+echo "    openclaw gateway status   Check status"
 echo ""
 echo "  Need help?  Contact Sam at samstarkman.com"
 echo ""
