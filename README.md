@@ -4,9 +4,15 @@ Everything your AI agent needs to get started, stay updated, and grow.
 
 ---
 
-## First Time? Start Here
+## Quick Start
 
-Open [INITIALIZATION-PROMPT.md](INITIALIZATION-PROMPT.md), fill in your details, and paste it as your first message to your agent. That single step sets up your agent's personality, learns about you, and gets everything running.
+Run this on a fresh Debian/Ubuntu VM (e.g. GCP Compute Engine):
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/SEStarkman/gaia-os/master/scripts/setup.sh)
+```
+
+This installs all dependencies (system packages, Homebrew, Node.js, OpenClaw) and sets up your PATH. When it finishes, run `openclaw onboard` to configure your agent.
 
 ---
 
@@ -35,12 +41,9 @@ Real, working examples you can learn from and adapt.
 
 ---
 
-## Scripts
+## First Time Setup
 
-Helper scripts for setup and maintenance.
-
-- **[scripts/setup.sh](scripts/setup.sh)**: Initial environment setup.
-- **[scripts/update-openclaw.sh](scripts/update-openclaw.sh)**: Quick update script.
+Open [INITIALIZATION-PROMPT.md](INITIALIZATION-PROMPT.md), fill in your details, and paste it as your first message to your agent. That single step sets up your agent's personality, learns about you, and gets everything running.
 
 ---
 
